@@ -3,27 +3,20 @@ struct Transaction {
     payee: String,
 }
 
-fn parse_txn(raw: String) -> Option<Transaction> {
+fn parse_txn(raw: &str) -> Option<Transaction> {
     let pieces = raw.split_once(" ");
 
-    match pieces {
-        Some((date, payee)) => {
-            return Some(Transaction {
-                date: date.to_string(),
-                payee: payee.to_string(),
-            });
-        }
-        None => {
-            return None;
-        }
-    }
+    return pieces.map(|(date, payee)| Transaction {
+        date: date.to_string(),
+        payee: payee.to_string(),
+    });
 }
 
 #[test]
 fn test_parse_txn() {
     let date = "2012-03-10".to_string();
     let payee = "KFC".to_string();
-    let txn = parse_txn(format!("{} {}", date, payee));
+    let txn = parse_txn(&format!("{} {}", date, payee));
 
     assert!(txn.is_some());
     let txn = txn.unwrap();
