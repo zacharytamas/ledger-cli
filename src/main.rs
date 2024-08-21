@@ -4,12 +4,10 @@ struct Transaction {
 }
 
 fn parse_txn(raw: &str) -> Option<Transaction> {
-    let pieces = raw.split_once(" ");
-
-    return pieces.map(|(date, payee)| Transaction {
+    raw.split_once(" ").map(|(date, payee)| Transaction {
         date: date.to_string(),
         payee: payee.to_string(),
-    });
+    })
 }
 
 #[test]
